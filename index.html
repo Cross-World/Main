@@ -3,29 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moje Herní Stránka</title>
+    <title>Cross-World Games</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Vítejte na mé stránce her!</h1>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="logo.jpg" alt="Cross-World Games Logo"> <span>Cross-World Games</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Domů</a></li>
+                    <li><a href="#games">Hry</a></li>
+                    </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="game-list">
-            <h2>Dostupné hry</h2>
-            
-            <div class="game-card">
-                <h3>Sudoku</h3>
-                <p>Klasická logická hádanka pro trénink mozku.</p>
-                <a href="Sudoku/index.html" class="button">Hrát Sudoku</a>
-            </div>
+    <section class="hero-section">
+        <div class="container">
+            <h1>Objevte Svět Her!</h1>
+            <p>Ponořte se do sbírky originálních logických her a výzev.</p>
+            <a href="#games" class="btn primary-btn">Začít hrát</a>
+        </div>
+    </section>
 
-            </section>
+    <main class="container" id="games">
+        <section class="game-list-section">
+            <h2>Naše hry</h2>
+            
+            <div class="game-cards-grid">
+                <div class="game-card">
+                    <img src="https://via.placeholder.com/150/007bff/ffffff?text=Sudoku" alt="Obrázek hry Sudoku">
+                    <h3>Sudoku</h3>
+                    <p>Klasická logická hádanka pro trénink mozku. Ponořte se do světa čísel!</p>
+                    <a href="Sudoku/index.html" class="btn secondary-btn">Hrát Sudoku</a>
+                </div>
+
+                <div class="game-card coming-soon">
+                    <img src="https://via.placeholder.com/150/6c757d/ffffff?text=Uz+brzy" alt="Obrázek budoucí hry">
+                    <h3>Nová hra</h3>
+                    <p>Připravujeme pro vás další zábavnou výzvu. Zůstaňte naladěni!</p>
+                    <span class="status-badge">Již brzy</span>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Moje Stránka</p>
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Cross-World Games. Všechna práva vyhrazena.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon">F</a> 
+                <a href="#" class="social-icon">T</a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

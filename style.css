@@ -1,67 +1,304 @@
-/* Základní styly pro celou stránku (platí pro PC i mobil) */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+/* Základní reset a globální styly */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
+    box-sizing: border-box;
 }
 
-header {
-    background: #333;
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #eee;
+    background-color: #1a1a2e; /* Tmavé pozadí */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hlavička */
+.main-header {
+    background-color: #0f0e1c;
     color: #fff;
-    padding: 1em 0;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #007bff; /* Modrá barva pro název */
+}
+
+.logo img {
+    height: 40px; /* Velikost loga */
+    margin-right: 10px;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li {
+    margin-left: 30px;
+}
+
+.main-nav ul li a {
+    color: #eee;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.main-nav ul li a:hover {
+    color: #007bff;
+}
+
+/* Hero sekce */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1600x600/333333/ffffff?text=Gaming+Background') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-section h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: #00e0ff; /* Světle modrá pro nadpis */
+}
+
+.hero-section p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tlačítka */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.primary-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.primary-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.secondary-btn {
+    background-color: #333;
+    color: #00e0ff;
+    border: 1px solid #00e0ff;
+}
+
+.secondary-btn:hover {
+    background-color: #00e0ff;
+    color: #1a1a2e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 224, 255, 0.4);
+}
+
+/* Sekce her */
+.game-list-section {
+    padding: 60px 0;
     text-align: center;
 }
 
-main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+.game-list-section h2 {
+    font-size: 2.8em;
+    margin-bottom: 50px;
+    color: #00e0ff;
+    position: relative;
+    display: inline-block;
 }
 
-.game-list {
-    display: flex; /* Použijeme Flexbox pro uspořádání karet */
-    flex-wrap: wrap; /* Umožní přechod karet na nový řádek */
-    gap: 20px;
-    justify-content: center;
+.game-list-section h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #007bff;
+    border-radius: 2px;
+}
+
+.game-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responzivní grid */
+    gap: 30px;
+    justify-items: center;
 }
 
 .game-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Základní šířka karty */
+    background-color: #0f0e1c;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    padding: 25px;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
 }
 
-.button {
-    display: inline-block;
-    background: #007bff;
-    color: #fff;
-    padding: 10px 15px;
-    margin-top: 15px;
-    text-decoration: none;
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+}
+
+.game-card img {
+    max-width: 100%;
+    height: 150px; /* Pevná výška obrázků */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.game-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #00e0ff;
+}
+
+.game-card p {
+    color: #bbb;
+    margin-bottom: 25px;
+    font-size: 0.95em;
+}
+
+.game-card.coming-soon {
+    opacity: 0.7;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card.coming-soon:hover {
+    transform: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #ffc107; /* Žlutá barva */
+    color: #333;
+    padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    font-size: 0.8em;
+    font-weight: 700;
 }
 
-.button:hover {
-    background-color: #0056b3;
+
+/* Patička */
+.main-footer {
+    background-color: #0f0e1c;
+    color: #aaa;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: auto; /* Zajistí přilepení k dolní části stránky */
+    border-top: 1px solid #222;
 }
 
-/* --- MEDIA QUERY PRO RESPONZIVITU --- */
-/* Styly, které se aplikují, když je šířka obrazovky menší nebo rovna 600px (typicky mobil) */
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 1.5em; /* Zmenšení nadpisu na mobilu */
+.main-footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: #aaa;
+    font-size: 1.5em;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #007bff;
+}
+
+/* Responzivita */
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
     }
 
-    .game-card {
-        width: 100%; /* Karta zabere celou šířku na mobilu */
-        max-width: 400px;
+    .main-nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-nav ul li {
+        margin: 0 15px 10px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-section p {
+        font-size: 1.1em;
+    }
+
+    .game-list-section h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 60px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2em;
+    }
+
+    .hero-section p {
+        font-size: 1em;
+    }
+    
+    .logo span {
+        font-size: 1.4em;
+    }
+
+    .main-nav ul li {
+        margin: 0 10px 10px 10px;
     }
 }
