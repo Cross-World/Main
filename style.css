@@ -1,0 +1,172 @@
+/* === style.css === */
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    max-width: 700px; /* Rozšíření max. šířky pro lepší zarovnání s mřížkou */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.timer {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* === Stylování tlačítka Poznámky === */
+#notes-mode-btn {
+    background-color: #ffc107; /* Žlutá pro neaktivní stav */
+    color: #333;
+    font-weight: bold;
+}
+
+#notes-mode-btn.active-mode {
+    background-color: #dc3545; /* Červená pro aktivní režim */
+    color: white;
+}
+
+
+/* === Mřížka Sudoku === */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    width: 90vmin;
+    max-width: 700px; /* Větší mřížka */
+    aspect-ratio: 1 / 1;
+    border: 3px solid #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.cell {
+    border: 1px solid #aaa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    user-select: none;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 2px;
+}
+
+/* Silnější ohraničení pro 3x3 boxy */
+.border-right {
+    border-right-width: 3px !important;
+    border-right-color: #333 !important;
+}
+
+.border-bottom {
+    border-bottom-width: 3px !important;
+    border-bottom-color: #333 !important;
+}
+
+/* Počáteční hodnoty (generovaná čísla) */
+.initial-value {
+    font-weight: bold;
+    background-color: #eee;
+    color: #333;
+    font-size: 1.8em; 
+}
+
+/* Buňky, do kterých se dá psát */
+.cell:not(.initial-value) {
+    background-color: #fcfcfc; 
+}
+
+/* Aktivní buňka */
+.cell.active {
+    background-color: #ffe4b2; 
+}
+
+/* Buňka s chybou */
+.cell.error .main-input {
+    color: red;
+}
+
+/* === Poznámky (Kandidátské číslice) === */
+
+.notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.6em;
+    color: #007bff;
+    padding: 3px;
+    box-sizing: border-box;
+    pointer-events: none; /* Umožní kliknutí skrz poznámky na hlavní input */
+}
+
+.note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+}
+
+/* Skrýt poznámky, pokud je v buňce hlavní číslo nebo je to initial-value */
+.initial-value .notes, 
+.cell:not(.initial-value) .main-input:valid ~ .notes { 
+    display: none; 
+}
+
+/* === Hlavní vstupní pole (vepsaná čísla) === */
+
+.main-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 1.8em; /* Stejná velikost jako initial-value */
+    padding: 0;
+    margin: 0;
+    outline: none;
+    background-color: transparent;
+    z-index: 10;
+    position: relative;
+    color: #000;
+}
