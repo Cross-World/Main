@@ -282,23 +282,54 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero-section {
-        padding: 60px 15px;
-    }
 
-    .hero-section h1 {
-        font-size: 2em;
-    }
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1600x600/333333/ffffff?text=Gaming+Background') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column; /* Umožní zarovnání obsahu do sloupce */
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    position: relative; /* Pro absolutní pozicování loga */
+    overflow: hidden; /* Pro případ, že by logo přesahovalo */
+}
 
-    .hero-section p {
-        font-size: 1em;
-    }
-    
-    .logo span {
-        font-size: 1.4em;
-    }
+.hero-section .container { /* Zajistíme, že text zůstane v kontejneru */
+    position: relative;
+    z-index: 2; /* Zajistí, že text je nad logem */
+}
 
-    .main-nav ul li {
-        margin: 0 10px 10px 10px;
+/* Styly pro velké logo v Hero sekci */
+.hero-logo {
+    position: absolute; /* Absolutní pozice vzhledem k .hero-section */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrování loga */
+    width: 400px; /* Nastavte požadovanou šířku loga */
+    max-width: 80%; /* Aby se logo zmenšilo na menších obrazovkách */
+    opacity: 0.15; /* Průhlednost, aby nerušilo text */
+    z-index: 1; /* Zajistí, že logo je pod textem */
+    pointer-events: none; /* Logo nebude reagovat na kliknutí */
+}
+
+/* ... (zbytek stylů) ... */
+
+/* Responzivita - aktualizace pro hero-logo */
+@media (max-width: 768px) {
+    /* ... (předchozí responzivní styly) ... */
+    .hero-logo {
+        width: 300px; /* Menší logo na tabletech */
+    }
+}
+
+@media (max-width: 480px) {
+    /* ... (předchozí responzivní styly) ... */
+    .hero-logo {
+        width: 250px; /* Ještě menší logo na mobilech */
+        opacity: 0.1; /* Mírně menší průhlednost na mobilech, aby se neztratilo */
     }
 }
