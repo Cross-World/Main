@@ -1,0 +1,61 @@
+.main-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #0f0e1c;
+    padding: 15px 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.main-header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between; /* Rozdělí logo doleva a menu doprava */
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8em;
+    text-decoration: none;
+    color: #00e0ff; /* Tvá tyrkysová barva */
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Mezery mezi odkazy */
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav ul li a {
+    color: #eee;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.main-nav ul li a:hover {
+    color: #007bff; /* Modrá při najetí */
+}
+
+/* Responzivita pro mobily */
+@media (max-width: 600px) {
+    .main-header .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main-nav ul {
+        gap: 15px;
+    }
+}

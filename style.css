@@ -1,0 +1,159 @@
+/* Globální nastavení a reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #eee;
+    background-color: #1a1a2e; /* Tmavé herní pozadí */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Pomocný kontejner */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Hero Sekce --- */
+.hero-section {
+    position: relative;
+    padding: 20px 0 60px; /* Nízký horní padding odstraní mezeru označenou křížky */
+    text-align: center;
+    background: radial-gradient(circle, #252545 0%, #0f0e1c 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: 4.5em;
+    color: #00e0ff; 
+    margin: 0 0 15px 0; /* Žádný horní margin, malý odstup od loga */
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 0 20px rgba(0, 224, 255, 0.8);
+    width: 100%;
+}
+
+/* Styly pro logo pod nadpisem */
+.hero-logo {
+    position: relative; 
+    margin: 0 auto;
+    width: 850px;       /* Velikost upravená tak, aby bylo logo vidět celé i s textem dole */
+    max-width: 95%;     
+    opacity: 0.25;      /* Průhlednost pro herní atmosféru */
+    z-index: 1;
+    display: block;
+}
+
+/* --- Tlačítka --- */
+.btn {
+    display: inline-block;
+    padding: 14px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #00e0ff;
+    border: 2px solid #00e0ff;
+    margin-top: 15px;
+}
+
+.secondary-btn:hover {
+    background-color: #00e0ff;
+    color: #0f0e1c;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+}
+
+/* --- Sekce her --- */
+.game-list-section {
+    padding: 60px 0;
+}
+
+.game-list-section h2 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #00e0ff;
+}
+
+.game-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px; /* Mezera mezi kartami */
+    margin-top: 40px;
+}
+
+.game-card {
+    background: #0f0e1c;
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    border-color: #00e0ff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.game-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #050510;
+}
+
+/* --- Patička --- */
+.main-footer {
+    background-color: #0f0e1c;
+    color: #888;
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.social-links { margin-top: 15px; }
+
+.social-links a {
+    color: #00e0ff;
+    font-size: 1.8em;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    filter: drop-shadow(0 0 8px #00e0ff);
+}
+
+/* Responzivita */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5em; }
+    .hero-logo { width: 90%; }
+}
+
+
+

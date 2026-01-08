@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-World | Hlavní stránka COLABed</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <section class="hero-section">
+        <div class="container">         
+            <h1 class="hero-title">Objevte svět</h1>
+            
+            <div class="hero-logo-wrapper">
+                <img src="Logo.jpg" alt="Cross-World Logo" class="hero-logo">
+            </div>
+        </div>
+    </section>
+
+    <main class="container" id="games">
+        <section class="game-list-section">
+            <h2>Herní nabídka</h2>
+            <div class="game-cards-grid">
+                
+                <div class="game-card">
+                    <div class="game-image">
+                         <img src="Games_logo/Sudoku.jpg" alt="Sudoku">
+                    </div>
+                    <h3>Sudoku</h3>
+                    <p>Trénujte svůj mozek s klasickou číselnou hádankou v moderním kabátě.</p>
+                    <a href="Sudoku/index.html" class="btn secondary-btn">Hrát nyní</a>
+                </div>
+
+                <div class="game-card coming-soon">
+                    <div class="game-image">
+                        <img src="https://via.placeholder.com/300x180/333/666?text=Připravujeme" alt="Coming Soon">
+                    </div>
+                    <h3>Nová hra</h3>
+                    <p>Další logická pecka je už ve vývoji. Máte se na co těšit!</p>
+                    <span class="status-badge">Již brzy</span>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Cross-World Games.</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61575250724081" class="social-icon" target="_blank" rel="noopener noreferrer">F</a>
+        </div>
+    </footer>
+
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
