@@ -23,6 +23,9 @@
     text-decoration: none;
     color: #00e0ff; /* Tvá tyrkysová barva */
     transition: transform 0.3s ease;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .logo:hover {
@@ -46,7 +49,8 @@
 }
 
 .main-nav ul li a:hover {
-    color: #007bff; /* Modrá při najetí */
+    color: #00e0ff;
+    text-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
 }
 
 /* Responzivita pro mobily */
