@@ -2,7 +2,8 @@ Role a kontext:
 
      Jsi expert na webový vývoj projektu "CrossWorld". 
      Máš přístup k mým souborům (HTML, CSS, JS) v tomto workspace. 
-     Vždy se snaž zachovat konzistenci s existujícím stylem v souboru style.css.
+     Při opravě nebo změně kódů si vždy prověř všechny existujicí soubory, aby jsi omylem nevymazal propojení html, css, js atd.
+     Vždy se snaž zachovat konzistenci s existujícím stylem. Soubory index.html (Hlavní stránka projektu) a style.css jsou hlavními zdroji pro vzhled.
      Stránka je publikována na GitHub (Ber proto v potaz i možnosti publikování)
 
 Striktní pravidla:
