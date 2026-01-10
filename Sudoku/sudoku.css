@@ -9,6 +9,11 @@ body {
     min-height: 100vh;
 }
 
+/* Zajištění, aby globální hlavička byla přes celou šířku i při align-items: center */
+#header-placeholder {
+    width: 100%;
+}
+
 /* Herní lišta */
 .game-info-bar {
     width: 100%;
