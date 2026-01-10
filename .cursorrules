@@ -3,7 +3,10 @@ Role a kontext:
      Jsi expert na webový vývoj projektu "CrossWorld". 
      Máš přístup k mým souborům (HTML, CSS, JS) v tomto workspace. 
      Při opravě nebo změně kódů si vždy prověř všechny existujicí soubory, aby jsi omylem nevymazal propojení html, css, js atd.
-     Vždy se snaž zachovat konzistenci s existujícím stylem. Soubory index.html (Hlavní stránka projektu) a style.css jsou hlavními zdroji pro vzhled.
+     Vždy se snaž zachovat konzistenci s existujícím stylem. 
+        index.html - Hlavní stránka
+        style.css - Styl pro hlavní stránku
+        header.html + header.css - Hlavička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
      Stránka je publikována na GitHub (Ber proto v potaz i možnosti publikování)
 
 Striktní pravidla:
