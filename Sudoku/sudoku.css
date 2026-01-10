@@ -1,0 +1,98 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1a1a2e;
+    color: #eee;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Herní lišta */
+.game-info-bar {
+    width: 100%;
+    background-color: #0f0e1c;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #333;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-title { color: #00e0ff; text-shadow: 0 0 15px rgba(0, 224, 255, 0.6); margin: 0; }
+.stats { display: flex; gap: 30px; font-weight: bold; color: #00e0ff; font-size: 1.3em; }
+.buttons-row { display: flex; gap: 10px; }
+
+button {
+    padding: 10px 18px;
+    background-color: transparent;
+    color: #00e0ff;
+    border: 2px solid #00e0ff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover { background-color: #00e0ff; color: #0f0e1c; }
+#notes-mode-btn.active-mode { background-color: #00e0ff; color: #0f0e1c; box-shadow: 0 0 15px #00e0ff; }
+
+/* Board a Pauza */
+#game-container { margin-top: 40px; transition: filter 0.3s; }
+#game-container.paused { filter: blur(12px); pointer-events: none; }
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: 90vmin;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
+    border: 4px solid #00e0ff;
+    background-color: #0f0e1c;
+}
+
+.cell {
+    border: 1px solid #252545;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.border-right { border-right: 3px solid #00e0ff !important; }
+.border-bottom { border-bottom: 3px solid #00e0ff !important; }
+
+.initial-value { font-weight: bold; color: #fff; background-color: #161633; font-size: 1.8em; }
+
+.main-input {
+    width: 100%; height: 100%; border: none; text-align: center;
+    font-size: 1.8em; background-color: transparent; color: #00e0ff;
+    outline: none; z-index: 2;
+}
+
+.cell.error .main-input { color: #ff4d4d !important; text-shadow: 0 0 10px #ff4d4d; }
+
+/* Poznámky */
+.notes-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    width: 100%; height: 100%; position: absolute;
+    pointer-events: none; z-index: 1; padding: 2px; box-sizing: border-box;
+}
+.note-num { font-size: 0.6em; color: #00e0ff; text-align: center; opacity: 0.6; }
+
+/* Animace */
+@keyframes neon-pulse {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(57, 255, 20, 0.4); box-shadow: inset 0 0 15px #39FF14; }
+    100% { background-color: transparent; }
+}
+.success-pulse { animation: neon-pulse 0.8s ease-out; }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku - Cross-World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sudoku.css">
+    <link rel="stylesheet" href="../header.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <header class="game-info-bar">
+        <div class="header-content">
+            <h1 class="game-title">Sudoku</h1>
+            <div class="controls">
+                <div class="stats">
+                    <span class="stat-item">Čas: <span id="timer">00:00</span></span>
+                    <span class="stat-item">Chyby: <span id="errors-display">0</span>/3</span>
+                </div>
+                <div class="buttons-row">
+                    <button id="notes-mode-btn">Poznámky: VYPNUTO</button> 
+                    <button id="pause-btn">Pauza</button>
+                    <button id="new-game-btn">Nová hra</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="game-container">
+        <div id="sudoku-board" class="board"></div>
+    </main>
+
+    <script>
+        // Načtení globální hlavičky
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(err => console.error("Nepodařilo se načíst hlavičku:", err));
+    </script>
+    <script src="sudoku.js"></script>
+</body>
+</html>
