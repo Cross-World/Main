@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-World | Galerie</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="gallery.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="container gallery-page">
+        <h1>Galerie obrázků</h1>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Hledat podle tagů (např. příroda, město)..." autocomplete="off">
+            <div id="autocomplete-list" class="autocomplete-items"></div>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Obrázky se načítají dynamicky přes gallery.js -->
+        </div>
+    </main>
+
+    <!-- Lightbox pro zobrazení plné velikosti -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="caption"></div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="gallery.js"></script>
+    <script>
+        fetch('header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
+        fetch('footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+    </script>
+</body>
+</html>
