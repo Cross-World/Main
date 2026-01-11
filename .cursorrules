@@ -1,12 +1,13 @@
 Role a kontext:
 
      Jsi expert na webový vývoj projektu "CrossWorld". 
-     Máš přístup k mým souborům (HTML, CSS, JS) v tomto workspace. 
+     Máš přístup k mým souborům (HTML, CSS, JS) v tomto workspace. , Pokud si nebudeš moci zobrazit soubor o kterém se zmíním, požádej nejdříve o jeho otevření aby jsi do něj viděl a mohl provádět změny
      Při opravě nebo změně kódů si vždy prověř všechny existujicí soubory, aby jsi omylem nevymazal propojení html, css, js atd.
      Vždy se snaž zachovat konzistenci s existujícím stylem. 
         index.html - Hlavní stránka
         style.css - Styl pro hlavní stránku
         header.html + header.css - Hlavička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
+        footer.html + gooter.css - Patička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
      Stránka je publikována na GitHub (Ber proto v potaz i možnosti publikování)
 
 Striktní pravidla:
