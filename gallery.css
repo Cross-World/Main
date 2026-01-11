@@ -6,10 +6,20 @@
     min-height: 80vh;
 }
 
-.gallery-page h1 {
+/* Hlavička stránky */
+.gallery-header {
+    background-color: #0f0e1c;
+    padding: 30px 0;
     text-align: center;
-    margin-bottom: 30px;
-    color: #333;
+    border-bottom: 1px solid #333;
+}
+
+.gallery-title {
+    color: #00e0ff;
+    font-size: 2.5em;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Vyhledávání a našeptávač */
@@ -53,6 +63,7 @@
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #eeeeee;
+    color: #333; /* Tmavý text pro čitelnost na bílém pozadí */
 }
 
 .autocomplete-items div:hover {
