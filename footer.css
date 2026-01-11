@@ -1,0 +1,21 @@
+.main-footer {
+    background-color: #0f0e1c;
+    color: #888;
+    padding: 40px 0;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.social-links { margin-top: 15px; }
+
+.social-links a {
+    color: #00e0ff;
+    font-size: 1.8em;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    filter: drop-shadow(0 0 8px #00e0ff);
+}
