@@ -15,6 +15,33 @@ body {
     width: 100%;
 }
 
+/* Herní lišta */
+.game-info-bar {
+    width: 100%;
+    background-color: #0f0e1c;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #333;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-title {
+    color: #00e0ff;
+    text-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+    margin: 0;
+    font-size: 2em;
+    font-weight: bold;
+}
+
 /* Kontejner pro vycentrování hry mezi headerem a footerem */
 .main-content {
     flex: 1;
