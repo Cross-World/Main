@@ -34,13 +34,10 @@ body {
     align-items: center;
 }
 
-.game-title {
-    color: #00e0ff;
-    text-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
-    margin: 0;
-    font-size: 2em;
-    font-weight: bold;
-}
+.game-title { 
+    color: #00e0ff; 
+    text-shadow: 0 0 15px rgba(0, 224, 255, 0.6); 
+    margin: 0; }
 
 /* Kontejner pro vycentrování hry mezi headerem a footerem */
 .main-content {
