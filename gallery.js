@@ -15,9 +15,24 @@ const galleryData = [
         tags: ['placeholder'],
         title: 'placeholder'
     },
+    {
+        src: 'Gallery/image_4.jpg',
+        tags: ['placeholder'],
+        title: 'placeholder'
+    },
+    {
+        src: 'Gallery/image_5.jpg',
+        tags: ['placeholder'],
+        title: 'placeholder'
+    },
+    {
+        src: 'Gallery/image_6.jpg',
+        tags: ['placeholder'],
+        title: 'placeholder'
+    },
     // Příklad pro testování (pokud obrázky neexistují, zobrazí se placeholder)
     {
-        src: 'https://via.placeholder.com/800x600?text=Ukázka+1',
+        src: 'Gallery/placeholder.png',
         tags: ['demo', 'test'],
         title: 'Demo obrázek'
     }
