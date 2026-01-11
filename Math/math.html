@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-World | Matematická hra</title>
+    <link rel="stylesheet" href="math.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+    <div class="game-container">
+        <div class="header">
+            <div class="level-display">Úroveň: <span id="level">1</span></div>
+            <div class="score-display">
+                Skóre: <span id="score">0</span> | 
+                Správně: <span id="correct">0</span> | 
+                Chybně: <span id="wrong">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+        </div>
+        
+        <div class="question-area">
+            <div class="question" id="question">5 + 3 = ?</div>
+            <div class="answers" id="answers">
+                <!-- Tlačítka se generují v JS -->
+            </div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        
+        <div class="game-over" id="gameOver">
+            <h2>Hra skončila!</h2>
+            <p>Dosáhl jsi úroveň <span id="finalLevel"></span></p>
+            <p>Celkové skóre: <span id="finalScore"></span></p>
+            <button class="restart-btn" onclick="restartGame()">Hrát znovu</button>
+        </div>
+    </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="math.js"></script>
+    <script>
+        // Načtení hlavičky a patičky
+        fetch('../header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('../footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

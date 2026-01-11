@@ -7,7 +7,7 @@ Role a kontext:
         index.html - Hlavní stránka
         style.css - Styl pro hlavní stránku
         header.html + header.css - Hlavička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
-        footer.html + gooter.css - Patička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
+        footer.html + footer.css - Patička, která bude zobrazena na každé stránce (Současných i nově vytvořených)
      Stránka je publikována na GitHub (Ber proto v potaz i možnosti publikování)
 
 Striktní pravidla:
