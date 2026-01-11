@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-World | Sudoku</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../header.css">
-    <link rel="stylesheet" href="../footer.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../header.css">
+    <link rel="stylesheet" href="../../footer.css">
     <link rel="stylesheet" href="sudoku.css">
 </head>
 <body>
@@ -39,8 +39,8 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        // Načtení globální hlavičky
-        fetch('../header.html')
+        // Načtení hlavičky
+        fetch('../../header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
@@ -48,7 +48,7 @@
             .catch(err => console.error("Nepodařilo se načíst hlavičku:", err));
 
         // Načtení patičky
-        fetch('../footer.html')
+        fetch('../../footer.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
