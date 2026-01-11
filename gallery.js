@@ -1,17 +1,17 @@
 // Data galerie - ZDE UPRAVTE CESTY A TAGY
 const galleryData = [
     {
-        src: 'gallery/image (1).jpg', // Cesta relativní k gallery.html
+        src: 'Gallery/image_1.jpg', // Cesta relativní k gallery.html
         tags: ['Futurama', 'Simpsonovi', 'Rick and Morty'],
         title: 'placeholder'
     },
     {
-        src: 'gallery/image (2).jpg',
+        src: 'Gallery/image_2.jpg',
         tags: ['placeholder'],
         title: 'placeholder'
     },
     {
-        src: 'gallery/image (3).jpg',
+        src: 'Gallery/image_3.jpg',
         tags: ['placeholder'],
         title: 'placeholder'
     },
