@@ -7,9 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../header.css">
+    <link rel="stylesheet" href="../footer.css">
     <link rel="stylesheet" href="sudoku.css">
 </head>
 <body>
+    
 
     <div id="header-placeholder"></div>
 
@@ -34,6 +36,8 @@
         <div id="sudoku-board" class="board"></div>
     </main>
 
+    <div id´"footer-placeholder"></div>
+
     <script>
         // Načtení globální hlavičky
         fetch('../header.html')
@@ -42,6 +46,14 @@
                 document.getElementById('header-placeholder').innerHTML = data;
             })
             .catch(err => console.error("Nepodařilo se načíst hlavičku:", err));
+
+        // Načtení patičky
+        fetch('../footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
     </script>
     <script src="sudoku.js"></script>
 </body>
