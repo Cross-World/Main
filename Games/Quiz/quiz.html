@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-World | Kvízy</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../header.css">
+    <link rel="stylesheet" href="../../footer.css">
+    <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
 
@@ -29,11 +32,11 @@
     <script>
         // Jednoduchý skript pro načtení hlavičky a patičky.
         // Ujistěte se, že cesty k souborům '../../layout/header.html' a '../../layout/footer.html' jsou správné.
-        fetch('../../layout/header.html')
+        fetch('../../header.html')
             .then(response => response.ok ? response.text() : '')
             .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
-        fetch('../../layout/footer.html')
+        fetch('../../footer.html')
             .then(response => response.ok ? response.text() : '')
             .then(data => document.getElementById('footer-placeholder').innerHTML = data);
     </script>
