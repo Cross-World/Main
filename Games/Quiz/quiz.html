@@ -16,7 +16,7 @@
 
     <div class="game-info-bar">
         <div class="header-content">
-            <h1 id="main-title" class="game-title" onclick="renderCategoryMenu()">Cross-World Kvízy</h1>
+            <h1 id="main-title" class="game-title" onclick="renderCategoryMenu()">Kvízy</h1>
             <div id="global-timer" style="display:none">Čas: <span id="time-display">0:00</span></div>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
     <script>
         // Jednoduchý skript pro načtení hlavičky a patičky.
-        // Ujistěte se, že cesty k souborům '../../layout/header.html' a '../../layout/footer.html' jsou správné.
+        // Ujistěte se, že cesty k souborům '../..//header.html' a '../../layout/footer.html' jsou správné.
         fetch('../../header.html')
             .then(response => response.ok ? response.text() : '')
             .then(data => document.getElementById('header-placeholder').innerHTML = data);

@@ -11,7 +11,7 @@ function renderCategoryMenu() {
     clearInterval(timerInterval);
     document.getElementById('global-timer').style.display = 'none';
     
-    let html = `<h2>Herní nabídka - Kvízy</h2><div class="quiz-grid">`;
+    let html = `<h2>Nabídka kvízů</h2><div class="quiz-grid">`;
     for (const [id, data] of Object.entries(ALL_QUIZZES)) {
         html += `
             <div class="quiz-card" onclick="startQuiz('${id}')">
