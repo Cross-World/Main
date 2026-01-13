@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-World | Kvízy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="game-info-bar">
+        <div class="header-content">
+            <h1 id="main-title" class="game-title" onclick="renderCategoryMenu()">Cross-World Kvízy</h1>
+            <div id="global-timer" style="display:none">Čas: <span id="time-display">0:00</span></div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div id="app-mount">
+            <!-- Obsah se vykresluje zde pomocí quiz-engine.js -->
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Jednoduchý skript pro načtení hlavičky a patičky.
+        // Ujistěte se, že cesty k souborům '../../layout/header.html' a '../../layout/footer.html' jsou správné.
+        fetch('../../layout/header.html')
+            .then(response => response.ok ? response.text() : '')
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+
+        fetch('../../layout/footer.html')
+            .then(response => response.ok ? response.text() : '')
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    </script>
+    <script src="quiz-data.js"></script>
+    <script src="quiz-engine.js"></script>
+</body>
+</html>
