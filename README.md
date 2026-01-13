@@ -1,1 +1,1 @@
-Webová platforma **Cross-World** nabízí uživatelům prostor pro **trénink mozku** prostřednictvím digitálních hlavolamů. V současné době si návštěvníci mohou zahrát moderní verzi **klasického sudoku**, které pomáhá rozvíjet logické myšlení. Provozovatelé stránek navíc aktivně pracují na rozšiřování obsahu a brzy plánují představit **další logické hry**. Tento portál se zaměřuje na **vzdělávání i zábavu** v přehledném a uživatelsky přívětivém prostředí. Celkově projekt cílí na milovníky hádanek, kteří hledají **kvalitní mentální cvičení** online.
+
