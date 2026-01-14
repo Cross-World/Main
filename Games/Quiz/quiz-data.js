@@ -17,7 +17,7 @@ const ALL_QUIZZES = {
             { q: "Jak se jmenuje nejlepší kamarád Spongeboba?", a: ["Patrik", "Sépiák", "Plankton", "Sandy"], correct: 0 },
             { q: "Jak se jmenuje hlavní postava v seriálu 'Pokémon'?", a: ["Ash Ketchum", "Gary", "Brock", "Misty"], correct: 0 },
             { q: "Který seriál se zaměřuje na postavu jménem Homer?", a: ["Simpsonovi", "Americký táta", "Griffinovi", "Futurama"], correct: 0 },
-            { q: "Jak se jmenuje otec v seriálu 'Griffinovi'?", a: ["Peter Griffin", "Homer Simpson", "Stan Smith", "Cleveland Brown"], correct: 0 }
+            { q: "Jak se jmenuje otec v seriálu 'Griffinovi'?", a: ["Peter Griffin", "Homer Simpson", "Stan Smith", "Cleveland Brown"], correct: 0 },
             { q: "Pro koho pracuje 'Stan Smith' ze seriálu 'Americký táta'?", a: ["CIA", "FBI", "Tajnou vládu", "Mimozemštany"], correct: 0 },
            
         ]
