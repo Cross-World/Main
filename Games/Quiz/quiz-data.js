@@ -21,5 +21,27 @@ const ALL_QUIZZES = {
             { q: "Pro koho pracuje 'Stan Smith' ze seriálu 'Americký táta'?", a: ["CIA", "FBI", "Tajnou vládu", "Mimozemštany"], correct: 0 },
            
         ]
-        }
+        },
+    stargate: {
+        title: "Hvězdná brána",
+        description: "Prověř své znalosti o SG-1, Atlantis, Universe a původním filmu.",
+        icon: "🌌",
+        questions: [
+            { q: "Jak se jmenuje kov, ze kterého je vyrobena Hvězdná brána?", a: ["Naquadah", "Trinium", "Neutronium", "Adamantium"], correct: 0 },
+            { q: "Kolik symbolů (zadaných adres) je potřeba pro cestu do jiné galaxie?", a: ["8", "7", "9", "6"], correct: 0 },
+            { q: "Jak se jmenuje domovská planeta Asgardů?", a: ["Othala", "Chulak", "Abydos", "Dakara"], correct: 0 },
+            { q: "Kdo vyřešil matematický problém s energií pro vytočení devátého symbolu?", a: ["Eli Wallace", "Nicholas Rush", "Samantha Carter", "Rodney McKay"], correct: 0 },
+            { q: "Která rasa stvořila Hvězdné brány?", a: ["Antikové", "Asgardi", "Noxové", "Furlingové"], correct: 0 },
+            { q: "Jak se jmenuje parazitická rasa, která ovládá hostitele?", a: ["Goa'uld", "Wraith", "Replikátor", "Ori"], correct: 0 },
+            { q: "V jakém pohoří se nachází základna SGC?", a: ["Cheyenne Mountain", "Mount Everest", "Sierra Nevada", "Rocky Mountains"], correct: 0 },
+            { q: "Jak se jmenuje loď, na které se odehrává seriál Stargate Universe?", a: ["Destiny", "Daedalus", "Prometheus", "Odyssey"], correct: 0 },
+            { q: "Kdo byl původně prvním mužem Apophise, než se přidal k SG-1?", a: ["Teal'c", "Bra'tac", "Ronon Dex", "Vala Mal Doran"], correct: 0 },
+            { q: "Jak se jmenuje hlavní nepřátelská rasa v seriálu Stargate Atlantis?", a: ["Wraithové", "Asurané", "Geniiové", "Kull bojovníci"], correct: 0 },
+            { q: "Který herec ztvárnil Jacka O'Neilla v seriálu SG-1?", a: ["Richard Dean Anderson", "Kurt Russell", "Michael Shanks", "Ben Browder"], correct: 0 },
+            { q: "Jak se jmenuje Danielova manželka z planety Abydos?", a: ["Sha're", "Vala", "Ishta", "Osiris"], correct: 0 },
+            { q: "Který systémový lord byl v seriálu SG-1 nejdéle hlavním nepřítelem?", a: ["Ba'al", "Anubis", "Apophis", "Ra"], correct: 0 },
+            { q: "Co znamená zkratka ZPM?", a: ["Zero Point Module", "Zat'nik'tel Power Mode", "Zone Protection Module", "Z-energy Pulse Maker"], correct: 0 },
+            { q: "Jakou přezdívku má zbraň 'Zat'nik'tel'?", a: ["Zat", "Tyčová zbraň", "Dron", "P-90"], correct: 0 }
+        ]
+    }
 };
