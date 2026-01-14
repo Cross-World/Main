@@ -8,8 +8,9 @@ let timerInterval;
 const mount = document.getElementById('app-mount');
 
 function renderCategoryMenu() {
-    clearInterval(timerInterval);
-    document.getElementById('global-timer').style.display = 'none';
+    if (timerInterval) clearInterval(timerInterval);
+    const timerElem = document.getElementById('global-timer');
+    if (timerElem) timerElem.style.display = 'none';
     
     let html = `<h2>Nabídka kvízů</h2><div class="quiz-grid">`;
     for (const [id, data] of Object.entries(ALL_QUIZZES)) {
@@ -33,7 +34,9 @@ function startQuiz(quizId) {
     score = 0;
     userAnswers = [];
     
-    document.getElementById('global-timer').style.display = 'block';
+    const timerElem = document.getElementById('global-timer');
+    if (timerElem) timerElem.style.display = 'block';
+    
     startTime = new Date();
     timerInterval = setInterval(updateTimer, 1000);
     
@@ -43,10 +46,10 @@ function startQuiz(quizId) {
 function renderQuestion() {
     const qData = currentQuiz.questions[currentIdx];
     
-    // Získáme text správné odpovědi podle indexu dříve, než pole zamícháme
+    // Uložíme si text správné odpovědi
     const correctText = qData.a[qData.correct];
     
-    // Vytvoříme zamíchané pole pro zobrazení uživateli
+    // Vytvoříme zamíchané pole kopií odpovědí
     const displayOptions = shuffle([...qData.a]);
     
     mount.innerHTML = `
@@ -54,14 +57,18 @@ function renderQuestion() {
             <span class="progress-tag">Otázka ${currentIdx + 1} / ${currentQuiz.questions.length}</span>
         </div>
         <div class="question"><h3>${qData.q}</h3></div>
-        <div class="options">
-            ${displayOptions.map(opt => `
-                <button class="opt-btn" onclick="handleAnswer('${opt.replace(/'/g, "\\'")}', '${correctText.replace(/'/g, "\\")}')">
-                    ${opt}
-                </button>
-            `).join('')}
-        </div>
+        <div class="options" id="options-container"></div>
     `;
+
+    // Tlačítka vytvoříme dynamicky skrze JS, aby apostrofy (Goa'uld) nezlobily v HTML
+    const container = document.getElementById('options-container');
+    displayOptions.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.textContent = opt;
+        btn.onclick = () => handleAnswer(opt, correctText);
+        container.appendChild(btn);
+    });
 }
 
 function handleAnswer(selected, correct) {
@@ -85,7 +92,8 @@ function handleAnswer(selected, correct) {
 
 function renderResults() {
     clearInterval(timerInterval);
-    const time = document.getElementById('time-display').innerText;
+    const timeDisplay = document.getElementById('time-display');
+    const time = timeDisplay ? timeDisplay.innerText : "0:00";
     
     let html = `
         <div style="text-align:center; margin-bottom: 30px;">
@@ -126,7 +134,10 @@ function updateTimer() {
     const diff = Math.floor((new Date() - startTime) / 1000);
     const m = Math.floor(diff / 60);
     const s = diff % 60;
-    document.getElementById("time-display").innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+    const timeDisplay = document.getElementById("time-display");
+    if (timeDisplay) {
+        timeDisplay.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
 }
 
 renderCategoryMenu();
