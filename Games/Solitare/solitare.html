@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Cross-World Solitaire | Modular Build</title>
+    <link rel="stylesheet" href="solitare.css">
+</head>
+<body>
+    <header>
+        <button id="new-game-btn">Nová hra</button>
+        <div id="score-display">Skóre: 0</div>
+    </header>
+
+    <div id="game-board">
+        <div id="stock-slot" class="slot top-row"></div>
+        <div id="waste-slot" class="slot top-row"></div>
+        <div class="slot foundation-slot top-row" data-idx="0"></div>
+        <div class="slot foundation-slot top-row" data-idx="1"></div>
+        <div class="slot foundation-slot top-row" data-idx="2"></div>
+        <div class="slot foundation-slot top-row" data-idx="3"></div>
+        </div>
+
+    <div id="game-report">
+        <h3>Log analýza (v10):</h3>
+        <div id="log-list"></div>
+    </div>
+
+    <script src="solitare.js"></script>
+</body>
+</html>

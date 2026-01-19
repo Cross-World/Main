@@ -45,6 +45,11 @@ const galleryData = [
         tags: ['placeholder'],
         title: 'placeholder'
     },
+        {
+        src: 'Gallery/image_10.jpg',
+        tags: ['placeholder'],
+        title: 'placeholder'
+    },
     // Příklad pro testování (pokud obrázky neexistují, zobrazí se placeholder)
     {
         src: 'Gallery/placeholder.png',

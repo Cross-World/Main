@@ -1,0 +1,41 @@
+:root { --bg: #1a5e20; --cw: #ffffff; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+#game-board { position: relative; flex-grow: 1; height: 100%; min-width: 900px; }
+#game-report { width: 340px; background: #000; border-left: 2px solid #333; padding: 15px; display: flex; flex-direction: column; z-index: 100; }
+#log-list { flex-grow: 1; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.85rem; }
+
+.log-entry { margin-bottom: 4px; padding: 4px; border-left: 3px solid #555; background: #111; }
+.log-error { border-color: #ff4757; color: #ff7675; }
+.log-success { border-color: #2ed573; color: #55efc4; }
+
+.slot { width: 110px; height: 160px; border: 2px dashed rgba(255,255,255,0.2); border-radius: 10px; position: absolute; }
+.top-row { top: 40px; }
+
+/* Pozice slotů */
+#stock-slot { left: 40px; }
+#waste-slot { left: 170px; }
+.foundation-slot[data-idx="0"] { left: 420px; }
+.foundation-slot[data-idx="1"] { left: 550px; }
+.foundation-slot[data-idx="2"] { left: 680px; }
+.foundation-slot[data-idx="3"] { left: 810px; }
+
+.card { 
+    width: 110px; height: 160px; background: var(--cw); border-radius: 10px; 
+    border: 1px solid #ccc; color: black; display: flex; flex-direction: column; 
+    align-items: center; justify-content: space-between; padding: 10px; 
+    box-sizing: border-box; font-size: 1.3rem; font-weight: bold; 
+    position: absolute; cursor: grab; user-select: none; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
+}
+
+.card.back { 
+    background: linear-gradient(135deg, #2980b9 25%, #3498db 50%, #2980b9 75%); 
+    background-size: 15px 15px; color: transparent !important; 
+}
+
+.card.red { color: #e74c3c; }
+.card.black { color: #2c3e50; }
+
+header { position: absolute; top: 10px; width: 100%; display: flex; justify-content: center; gap: 20px; z-index: 1000; pointer-events: none; }
+header button { pointer-events: auto; background: #e67e22; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
