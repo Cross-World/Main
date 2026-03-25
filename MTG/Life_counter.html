@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Magic Life Counter PRO</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #1a1a1a;
+            --text-color: #ffffff;
+            --accent-color: #3498db;
+            --dice-bg: #c0392b;
+            --winner-color: #f1c40f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Setup Screen */
+        #setup-screen {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 200;
+            background: var(--bg-color);
+        }
+
+        .setup-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            border: 1px solid #333;
+        }
+
+        h2 { text-align: center; margin-bottom: 15px; color: var(--accent-color); font-size: 1.4rem; }
+
+        label { display: block; margin-top: 10px; margin-bottom: 4px; font-size: 0.8rem; opacity: 0.6; }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #000;
+            color: white;
+            outline: none;
+        }
+
+        .player-inputs {
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Game Screen */
+        #game-screen {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .player-zone {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .p1 { background: linear-gradient(135deg, #2c3e50, #000); }
+        .p2 { background: linear-gradient(135deg, #444, #111); }
+        .p3 { background: linear-gradient(135deg, #7b241c, #000); }
+        .p4 { background: linear-gradient(135deg, #186a3b, #000); }
+
+        .player-name-label {
+            position: absolute;
+            top: 15%;
+            font-size: clamp(1rem, 5vw, 1.5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            width: 90%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .life-value {
+            font-size: clamp(70px, 20vw, 140px);
+            font-weight: 900;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            margin: 10px 0;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: clamp(20px, 10vw, 60px);
+            z-index: 5;
+        }
+
+        .life-btn {
+            width: clamp(60px, 15vw, 80px);
+            height: clamp(60px, 15vw, 80px);
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* UI Střed - Kostka */
+        #center-ui {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        #dice {
+            width: 60px;
+            height: 60px;
+            background: var(--dice-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0,0,0,1);
+            border: 2px solid rgba(255,255,255,0.4);
+            cursor: pointer;
+        }
+
+        .menu-btn {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            border: 1px solid #444;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+
+        /* Konec hry */
+        .eliminated { opacity: 0.2 !important; filter: grayscale(1); pointer-events: none; }
+        .winner { background: var(--winner-color) !important; z-index: 50; }
+        .winner * { color: black !important; opacity: 1 !important; }
+
+        .rolling { animation: roll-anim 0.4s ease-in-out; }
+        @keyframes roll-anim {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Layouty */
+        .layout-2 { display: grid; grid-template-rows: 1fr 1fr; }
+        .layout-3 { display: grid; grid-template-rows: 1fr 1fr 1fr; }
+        .layout-4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+        /* Rotace jmen a tlačítek pro protihráče */
+        .layout-2 .player-zone:nth-child(1),
+        .layout-4 .player-zone:nth-child(1),
+        .layout-4 .player-zone:nth-child(2) { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+    <div id="setup-screen">
+        <div class="setup-card">
+            <h2>PŘÍPRAVA HRY</h2>
+            
+            <label>Počet hráčů</label>
+            <select id="p-count" onchange="renderPlayerInputs()">
+                <option value="2">2 Hráči</option>
+                <option value="3">3 Hráči</option>
+                <option value="4">4 Hráči</option>
+            </select>
+
+            <label>Startovní životy</label>
+            <input type="number" id="l-start" value="20">
+
+            <div id="player-inputs-container" class="player-inputs"></div>
+
+            <button class="start-btn" onclick="initGame()">ZAČÍT HRU</button>
+        </div>
+    </div>
+
+    <datalist id="saved-names"></datalist>
+
+    <div id="center-ui">
+        <div id="dice" onclick="roll()">20</div>
+        <button class="menu-btn" onclick="location.reload()">Menu</button>
+    </div>
+
+    <div id="game-screen"></div>
+
+    <script>
+        let isGameOver = false;
+
+        function renderPlayerInputs() {
+            const count = document.getElementById('p-count').value;
+            const container = document.getElementById('player-inputs-container');
+            container.innerHTML = '';
+            
+            for(let i=1; i<=count; i++) {
+                container.innerHTML += `
+                    <label>Jméno Hráče ${i}</label>
+                    <input type="text" class="setup-name-input" id="setup-name-${i}" 
+                           placeholder="Hráč ${i}" list="saved-names">
+                `;
+            }
+            updateDatalist();
+        }
+
+        function updateDatalist() {
+            const saved = JSON.parse(localStorage.getItem('mtg_names') || '[]');
+            const datalist = document.getElementById('saved-names');
+            datalist.innerHTML = saved.map(name => `<option value="${name}">`).join('');
+        }
+
+        function saveNames(names) {
+            let saved = JSON.parse(localStorage.getItem('mtg_names') || '[]');
+            names.forEach(name => {
+                if(name && !saved.includes(name) && !name.startsWith("HRÁČ")) saved.push(name);
+            });
+            localStorage.setItem('mtg_names', JSON.stringify(saved));
+        }
+
+        function initGame() {
+            const count = parseInt(document.getElementById('p-count').value);
+            const startLife = parseInt(document.getElementById('l-start').value);
+            const screen = document.getElementById('game-screen');
+            const names = [];
+
+            for(let i=1; i<=count; i++) {
+                const val = document.getElementById(`setup-name-${i}`).value.trim();
+                names.push(val || `HRÁČ ${i}`);
+            }
+
+            saveNames(names);
+            isGameOver = false;
+            
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('center-ui').style.display = 'flex';
+            screen.style.display = 'grid';
+            screen.className = 'layout-' + count;
+            screen.innerHTML = '';
+
+            names.forEach((name, index) => {
+                const i = index + 1;
+                const zone = document.createElement('div');
+                zone.className = `player-zone p${i}`;
+                zone.id = `zone-${i}`;
+                zone.innerHTML = `
+                    <div class="player-name-label">${name}</div>
+                    <div class="life-value" id="val-${i}">${startLife}</div>
+                    <div class="btn-container">
+                        <button class="life-btn" onclick="update(${i}, -1)">−</button>
+                        <button class="life-btn" onclick="update(${i}, 1)">+</button>
+                    </div>
+                `;
+                screen.appendChild(zone);
+            });
+        }
+
+        function update(id, mod) {
+            if (isGameOver) return;
+            const el = document.getElementById(`val-${id}`);
+            const zone = document.getElementById(`zone-${id}`);
+            let currentLife = parseInt(el.innerText);
+            let nextLife = currentLife + mod;
+
+            if (nextLife <= 0) {
+                el.innerText = "0";
+                zone.classList.add('eliminated');
+                checkStatus();
+            } else {
+                el.innerText = nextLife;
+            }
+        }
+
+        function checkStatus() {
+            const zones = document.querySelectorAll('.player-zone');
+            const active = Array.from(zones).filter(z => !z.classList.contains('eliminated'));
+
+            if (active.length === 1) {
+                isGameOver = true;
+                active[0].classList.add('winner');
+                // Malé zpoždění pro efekt vítězství
+                setTimeout(() => {
+                    const name = active[0].querySelector('.player-name-label').innerText;
+                    alert("Vítěz: " + name);
+                }, 200);
+            }
+        }
+
+        function roll() {
+            const d = document.getElementById('dice');
+            d.classList.add('rolling');
+            setTimeout(() => {
+                d.innerText = Math.floor(Math.random() * 20) + 1;
+                d.classList.remove('rolling');
+            }, 400);
+        }
+
+        renderPlayerInputs();
+    </script>
+</body>
+</html>
