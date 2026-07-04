@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Počítadlo životů — Magic: The Gathering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110D;
+    --surface:#1F1A14;
+    --surface-2:#241E17;
+    --ink:#EDE6D6;
+    --ink-muted:#A89A82;
+    --gold:#C9A24B;
+    --gold-dim:#7A6534;
+    --line: rgba(201,162,75,0.16);
+
+    --W-bg:#E8DFC5; --W-ink:#2B2620;
+    --U-bg:#265E85; --U-ink:#EAF2FA;
+    --B-bg:#332C39; --B-ink:#E9E3EC;
+    --R-bg:#8F3626; --R-ink:#FBEDE8;
+    --G-bg:#43602F; --G-ink:#EDF3E6;
+    --N-bg:#2A2621; --N-ink:#EDE6D6;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    height:100%; margin:0; overscroll-behavior:none; touch-action:manipulation;
+    background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif;
+    user-select:none; -webkit-user-select:none;
+  }
+  #app{ height:100dvh; width:100vw; overflow:hidden; position:relative; }
+
+  /* ---------- SETUP SCREEN ---------- */
+  #setup{
+    height:100%; width:100%; display:flex; align-items:center; justify-content:center;
+    padding:24px; background:
+      radial-gradient(ellipse at 50% -10%, rgba(201,162,75,0.10), transparent 60%),
+      var(--bg);
+  }
+  .card{
+    width:100%; max-width:460px; background:var(--surface);
+    border:1px solid var(--line); border-radius:18px; padding:32px 28px 28px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.45);
+  }
+  .brand{ text-align:center; margin-bottom:28px; }
+  .brand .glyph{
+    width:46px;height:46px;margin:0 auto 12px; display:block;
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    background:linear-gradient(155deg, var(--gold), var(--gold-dim));
+  }
+  .brand h1{
+    font-family:'Cinzel',serif; font-weight:700; font-size:22px; letter-spacing:0.14em;
+    margin:0; color:var(--ink); text-transform:uppercase;
+  }
+  .brand p{
+    margin:8px 0 0; font-size:12.5px; color:var(--ink-muted); letter-spacing:0.03em;
+  }
+  .group{ margin-top:22px; }
+  .group-label{
+    font-family:'Inter'; font-size:11px; font-weight:600; letter-spacing:0.12em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .chip-row{ display:flex; gap:10px; }
+  .chip{
+    flex:1; background:var(--surface-2); border:1px solid var(--line); color:var(--ink);
+    border-radius:10px; padding:14px 8px; font-family:'Oswald'; font-size:15px; font-weight:500;
+    letter-spacing:0.02em; cursor:pointer; text-align:center; transition:all .15s ease;
+  }
+  .chip small{ display:block; font-family:'Inter'; font-size:10.5px; font-weight:400; color:var(--ink-muted); margin-top:3px; letter-spacing:0.02em;}
+  .chip.active{ background:linear-gradient(155deg, var(--gold), var(--gold-dim)); border-color:var(--gold); color:#1a1610; }
+  .chip.active small{ color:#3a2f16; }
+  .chip:active{ transform:scale(0.97); }
+
+  .custom-life{
+    display:none; align-items:center; justify-content:center; gap:14px; margin-top:10px;
+  }
+  .custom-life.show{ display:flex; }
+  .custom-life button{
+    width:38px; height:38px; border-radius:9px; border:1px solid var(--line);
+    background:var(--surface-2); color:var(--gold); font-family:'Oswald'; font-size:18px;
+    cursor:pointer; line-height:1;
+  }
+  .custom-life button:active{ transform:scale(0.95); }
+  .custom-life input{
+    width:80px; text-align:center; background:var(--surface-2); border:1px solid var(--line);
+    border-radius:9px; color:var(--ink); font-family:'Oswald'; font-size:18px; font-weight:600;
+    padding:9px 4px; -moz-appearance:textfield;
+  }
+  .custom-life input::-webkit-outer-spin-button,
+  .custom-life input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+
+  .start-btn{
+    margin-top:30px; width:100%; padding:16px; border-radius:12px; border:none;
+    background:linear-gradient(155deg, var(--gold), var(--gold-dim)); color:#1a1610;
+    font-family:'Cinzel'; font-weight:700; font-size:15px; letter-spacing:0.1em;
+    text-transform:uppercase; cursor:pointer;
+  }
+  .start-btn:active{ transform:scale(0.98); }
+
+  /* ---------- GAME SCREEN ---------- */
+  #game{ display:none; height:100%; width:100%; position:relative; background:var(--bg); }
+  #grid{ display:grid; height:100%; width:100%; }
+  .zone{
+    position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;
+    background:var(--N-bg); color:var(--N-ink);
+    transition:background .25s ease, color .25s ease;
+  }
+  .zone.rot{ transform:rotate(180deg); }
+  .zone-inner{
+    position:relative; height:100%; width:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:2px;
+  }
+  .taparea{ position:absolute; top:0; bottom:0; width:50%; height:100%; z-index:1; }
+  .taparea.minus{ left:0; }
+  .taparea.plus{ right:0; }
+  .taparea span{
+    position:absolute; top:50%; transform:translateY(-50%); font-family:'Oswald'; font-size:15vw;
+    max-font-size:60px; opacity:0.05; pointer-events:none; font-weight:600;
+  }
+  .taparea.minus span{ left:6%; }
+  .taparea.plus span{ right:6%; }
+
+  .life-number{
+    font-family:'Oswald'; font-weight:700; font-size:min(20vw,120px); line-height:1;
+    letter-spacing:0.01em; position:relative; z-index:2; pointer-events:none;
+    text-shadow:0 2px 12px rgba(0,0,0,0.25);
+  }
+  .player-label{
+    font-family:'Inter'; font-size:12px; font-weight:600; letter-spacing:0.1em;
+    text-transform:uppercase; opacity:0.65; position:relative; z-index:2; pointer-events:none;
+  }
+  .mana-row{ display:flex; gap:8px; position:relative; z-index:3; margin-bottom:6px; pointer-events:auto; }
+  .mana-dot{
+    width:22px; height:22px; border-radius:50%; border:2px solid rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center; font-family:'Inter'; font-size:10px;
+    font-weight:700; cursor:pointer; opacity:0.55; transition:all .15s ease;
+  }
+  .mana-dot.selected{ opacity:1; border-color:rgba(255,255,255,0.85); box-shadow:0 0 0 2px rgba(0,0,0,0.2); }
+  .mana-dot.mW{ background:#E8DFC5; color:#2B2620; }
+  .mana-dot.mU{ background:#2E6E9E; color:#fff; }
+  .mana-dot.mB{ background:#332C39; color:#eee; }
+  .mana-dot.mR{ background:#A8402F; color:#fff; }
+  .mana-dot.mG{ background:#4B6B44; color:#fff; }
+
+  .delta-float{
+    position:absolute; font-family:'Oswald'; font-weight:600; font-size:22px; z-index:4;
+    pointer-events:none; opacity:0; top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  @keyframes floatUp{
+    0%{ opacity:0.9; transform:translate(-50%,-50%) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-130%) scale(1.3); }
+  }
+  @keyframes pulse{
+    0%{ transform:scale(1); } 30%{ transform:scale(1.08); } 100%{ transform:scale(1); }
+  }
+  .life-number.pulse{ animation:pulse .28s ease; }
+
+  /* dividers */
+  .zone{ box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35); }
+  .zone.locked{ filter:grayscale(0.85) brightness(0.5); }
+  .zone.locked .taparea{ pointer-events:none; }
+  .eliminated-badge{
+    position:absolute; z-index:5; font-family:'Inter', sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase; color:#fff; background:rgba(0,0,0,0.55);
+    padding:5px 12px; border-radius:7px; top:10px; left:50%; transform:translateX(-50%);
+    pointer-events:none;
+  }
+
+  /* ---------- HUB (spindown die button) ---------- */
+  #hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:20;
+    width:64px; height:64px; border:none; cursor:pointer;
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    background:linear-gradient(155deg, var(--gold), var(--gold-dim));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  }
+  #hub:active{ transform:translate(-50%,-50%) scale(0.94); }
+  #hub svg{ width:24px; height:24px; }
+
+  /* ---------- MENU POPOVER ---------- */
+  #menu{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9); z-index:30;
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:18px; width:260px; max-height:80vh; overflow-y:auto;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    display:none; opacity:0; transition:opacity .15s ease, transform .15s ease;
+  }
+  #menu.open{ display:block; opacity:1; transform:translate(-50%,-50%) scale(1); }
+  #menu h3{
+    font-family:'Cinzel'; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    margin:0 0 14px; color:var(--gold); text-align:center;
+  }
+  .menu-colors{ margin-bottom:16px; }
+  .menu-color-row{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:9px;
+  }
+  .menu-color-row .mc-label{
+    font-family:'Inter'; font-size:12.5px; font-weight:500; color:var(--ink-muted);
+  }
+  .menu-color-row .mc-dots{ display:flex; gap:6px; }
+  .menu-btn{
+    width:100%; padding:12px; margin-bottom:8px; border-radius:9px; border:1px solid var(--line);
+    background:var(--surface-2); color:var(--ink); font-family:'Inter'; font-size:13.5px; font-weight:500;
+    cursor:pointer; text-align:center;
+  }
+  .menu-btn.danger{ color:#e0a08f; }
+  .menu-btn:last-child{ margin-bottom:0; }
+  #overlay{
+    position:absolute; inset:0; background:rgba(0,0,0,0.55); z-index:25; display:none;
+  }
+  #overlay.open{ display:block; }
+
+  /* ---------- END SCREEN ---------- */
+  #end-screen{
+    position:absolute; inset:0; z-index:50; display:none; align-items:center; justify-content:center;
+    background:rgba(10,8,6,0.9); padding:24px;
+  }
+  #end-screen.open{ display:flex; }
+  .end-card{
+    width:100%; max-width:300px; background:var(--surface); border:1px solid var(--line);
+    border-radius:18px; padding:36px 28px 28px; text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,0.5);
+  }
+  .end-card .glyph{
+    width:50px; height:50px; margin:0 auto 16px; display:block;
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    background:linear-gradient(155deg, var(--gold), var(--gold-dim));
+  }
+  .end-card .eyebrow{
+    font-family:'Inter'; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-muted); margin:0 0 8px;
+  }
+  #winner-text{
+    font-family:'Cinzel'; font-weight:700; font-size:21px; letter-spacing:0.04em;
+    text-transform:uppercase; margin:0 0 26px; color:var(--ink); line-height:1.4;
+  }
+  .ghost-btn{
+    width:100%; padding:14px; border-radius:12px; border:1px solid var(--line); background:transparent;
+    color:var(--ink-muted); font-family:'Inter'; font-weight:500; font-size:13.5px; cursor:pointer; margin-top:10px;
+  }
+  .ghost-btn:active{ transform:scale(0.98); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SETUP -->
+  <div id="setup">
+    <div class="card">
+      <div class="brand">
+        <span class="glyph"></span>
+        <h1>Počítadlo životů</h1>
+        <p>Magic: The Gathering — nastav si partii</p>
+      </div>
+
+      <div class="group">
+        <span class="group-label">Typ hry</span>
+        <div class="chip-row" id="type-row">
+          <div class="chip" data-type="standard">Standardní</div>
+          <div class="chip" data-type="commander">Commander</div>
+        </div>
+      </div>
+
+      <div class="group">
+        <span class="group-label">Počet hráčů</span>
+        <div class="chip-row" id="players-row">
+          <div class="chip" data-players="2">2<small>hráči</small></div>
+          <div class="chip" data-players="4">4<small>hráči</small></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <span class="group-label">Počet životů</span>
+        <div class="chip-row" id="life-row">
+          <div class="chip" data-life="20">20</div>
+          <div class="chip" data-life="40">40</div>
+          <div class="chip" data-life="custom">Vlastní</div>
+        </div>
+        <div class="custom-life" id="custom-life">
+          <button type="button" id="custom-minus" aria-label="Snížit">−</button>
+          <input type="number" id="custom-input" value="20" min="1" max="999" inputmode="numeric">
+          <button type="button" id="custom-plus" aria-label="Zvýšit">+</button>
+        </div>
+      </div>
+
+      <button class="start-btn" id="start-btn">Začít hru</button>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game">
+    <div id="grid"></div>
+    <button id="hub" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1a1610" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 3v6h-6"/>
+      </svg>
+    </button>
+    <div id="overlay"></div>
+    <div id="menu">
+      <h3>Menu</h3>
+      <div class="menu-colors" id="menu-colors"></div>
+      <button class="menu-btn" id="reset-lives">Reset životů</button>
+      <button class="menu-btn danger" id="new-game">Nová hra / nastavení</button>
+      <button class="menu-btn" id="close-menu">Zavřít</button>
+    </div>
+
+    <div id="end-screen">
+      <div class="end-card">
+        <span class="glyph"></span>
+        <p class="eyebrow">Konec hry</p>
+        <h2 id="winner-text">Hráč 1 vyhrává</h2>
+        <button class="start-btn" id="play-again">Hrát znovu</button>
+        <button class="ghost-btn" id="back-setup">Zpět na hlavní obrazovku</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const MANA = ['R','U','G','W','B'];
+const MANA_NAMES = {W:'Bílá', U:'Modrá', B:'Černá', R:'Červená', G:'Zelená'};
+
+let state = {
+  playerCount: 2,
+  startLife: 20,
+  gameType: null,
+  players: []
+};
+
+// ---------- SETUP LOGIC ----------
+const playersRow = document.getElementById('players-row');
+const typeRow = document.getElementById('type-row');
+const lifeRow = document.getElementById('life-row');
+const customLifeRow = document.getElementById('custom-life');
+const customInput = document.getElementById('custom-input');
+
+const RECOMMENDED = {
+  standard:  { players:2, life:20 },
+  commander: { players:4, life:40 }
+};
+
+function selectChip(row, el){
+  [...row.children].forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setPlayers(n, {silent=false}={}){
+  state.playerCount = n;
+  [...playersRow.children].forEach(c=>{
+    c.classList.toggle('active', parseInt(c.dataset.players) === n);
+  });
+}
+
+function setLife(n){
+  state.startLife = n;
+  customLifeRow.classList.remove('show');
+  [...lifeRow.children].forEach(c=>{
+    c.classList.toggle('active', c.dataset.life !== 'custom' && parseInt(c.dataset.life) === n);
+  });
+}
+
+function setCustomLife(n){
+  n = Math.max(1, Math.min(999, n || 1));
+  customInput.value = n;
+  state.startLife = n;
+  selectChip(lifeRow, lifeRow.querySelector('[data-life="custom"]'));
+  customLifeRow.classList.add('show');
+}
+
+typeRow.addEventListener('click', e=>{
+  const chip = e.target.closest('.chip'); if(!chip) return;
+  selectChip(typeRow, chip);
+  state.gameType = chip.dataset.type;
+  const rec = RECOMMENDED[state.gameType];
+  setPlayers(rec.players);
+  setLife(rec.life);
+});
+
+playersRow.addEventListener('click', e=>{
+  const chip = e.target.closest('.chip'); if(!chip) return;
+  setPlayers(parseInt(chip.dataset.players));
+});
+
+lifeRow.addEventListener('click', e=>{
+  const chip = e.target.closest('.chip'); if(!chip) return;
+  if(chip.dataset.life === 'custom'){
+    setCustomLife(parseInt(customInput.value) || state.startLife);
+  } else {
+    setLife(parseInt(chip.dataset.life));
+  }
+});
+
+customInput.addEventListener('input', ()=>{
+  const v = Math.max(1, Math.min(999, parseInt(customInput.value) || 1));
+  state.startLife = v;
+});
+customInput.addEventListener('blur', ()=>{
+  customInput.value = Math.max(1, Math.min(999, parseInt(customInput.value) || 1));
+});
+document.getElementById('custom-minus').addEventListener('click', ()=>{
+  setCustomLife((parseInt(customInput.value)||1) - 1);
+});
+document.getElementById('custom-plus').addEventListener('click', ()=>{
+  setCustomLife((parseInt(customInput.value)||1) + 1);
+});
+
+// defaults: Standardní / 2 hráči / 20 životů
+typeRow.children[0].classList.add('active');
+state.gameType = 'standard';
+setPlayers(RECOMMENDED.standard.players);
+setLife(RECOMMENDED.standard.life);
+
+document.getElementById('start-btn').addEventListener('click', startGame);
+
+// ---------- GAME LOGIC ----------
+const gridEl = document.getElementById('grid');
+const setupEl = document.getElementById('setup');
+const gameEl = document.getElementById('game');
+
+function startGame(){
+  state.players = [];
+  for(let i=0;i<state.playerCount;i++){
+    state.players.push({
+      id:i,
+      life: state.startLife,
+      color: MANA[i % MANA.length],
+      eliminated: false
+    });
+  }
+  buildGrid();
+  setupEl.style.display = 'none';
+  gameEl.style.display = 'block';
+}
+
+function buildGrid(){
+  hideEndScreen();
+  gridEl.innerHTML = '';
+  const n = state.playerCount;
+  if(n === 2){
+    gridEl.style.gridTemplateColumns = '1fr';
+    gridEl.style.gridTemplateRows = '1fr 1fr';
+  } else {
+    gridEl.style.gridTemplateColumns = '1fr 1fr';
+    gridEl.style.gridTemplateRows = '1fr 1fr';
+  }
+
+  state.players.forEach((p, idx)=>{
+    const rotate = (n===2 && idx===0) || (n===4 && idx<2);
+    const zone = document.createElement('div');
+    zone.className = 'zone' + (rotate ? ' rot' : '');
+    zone.dataset.idx = idx;
+    zone.innerHTML = zoneTemplate(p, idx);
+    gridEl.appendChild(zone);
+  });
+
+  state.players.forEach((p, idx)=> applyColor(idx));
+  attachHandlers();
+  renderMenuColors();
+}
+
+function zoneTemplate(p, idx){
+  return `
+    <div class="zone-inner">
+      <div class="life-number" id="life-${idx}">${p.life}</div>
+      <div class="player-label">Hráč ${idx+1}</div>
+    </div>
+    <div class="taparea minus" data-idx="${idx}" data-dir="-1"><span>−</span></div>
+    <div class="taparea plus" data-idx="${idx}" data-dir="1"><span>+</span></div>
+  `;
+}
+
+function applyColor(idx){
+  const zone = gridEl.querySelector(`.zone[data-idx="${idx}"]`);
+  const c = state.players[idx].color;
+  zone.style.background = `var(--${c}-bg)`;
+  zone.style.color = `var(--${c}-ink)`;
+}
+
+function renderMenuColors(){
+  const container = document.getElementById('menu-colors');
+  container.innerHTML = state.players.map((p, idx)=>{
+    const dots = MANA.map(m => `<div class="mana-dot m${m} ${p.color===m?'selected':''}" data-idx="${idx}" data-color="${m}" title="${MANA_NAMES[m]}">${m}</div>`).join('');
+    return `<div class="menu-color-row"><span class="mc-label">Hráč ${idx+1}</span><div class="mc-dots">${dots}</div></div>`;
+  }).join('');
+
+  container.querySelectorAll('.mana-dot').forEach(dot=>{
+    dot.addEventListener('click', ()=>{
+      const idx = parseInt(dot.dataset.idx);
+      const color = dot.dataset.color;
+      state.players[idx].color = color;
+      applyColor(idx);
+      container.querySelectorAll(`.mana-dot[data-idx="${idx}"]`).forEach(d=>{
+        d.classList.toggle('selected', d.dataset.color === color);
+      });
+    });
+  });
+}
+
+function attachHandlers(){
+  // tap zones with press-and-hold repeat
+  gridEl.querySelectorAll('.taparea').forEach(area=>{
+    let holdTimeout=null, holdInterval=null, held=false;
+    const idx = parseInt(area.dataset.idx);
+    const dir = parseInt(area.dataset.dir);
+
+    const start = (e)=>{
+      e.preventDefault();
+      held = false;
+      holdTimeout = setTimeout(()=>{
+        held = true;
+        applyDelta(idx, dir, area);
+        holdInterval = setInterval(()=> applyDelta(idx, dir, area), 160);
+      }, 380);
+    };
+    const end = (e)=>{
+      clearTimeout(holdTimeout); clearInterval(holdInterval);
+      if(!held){ applyDelta(idx, dir, area); }
+      held = false;
+    };
+    area.addEventListener('pointerdown', start);
+    area.addEventListener('pointerup', end);
+    area.addEventListener('pointerleave', ()=>{ clearTimeout(holdTimeout); clearInterval(holdInterval); held=false; });
+    area.addEventListener('pointercancel', ()=>{ clearTimeout(holdTimeout); clearInterval(holdInterval); held=false; });
+  });
+}
+
+function applyDelta(idx, dir, areaEl){
+  const p = state.players[idx];
+  if(p.eliminated) return;
+
+  let newLife = p.life + dir;
+  if(newLife <= 0) newLife = 0;
+  if(newLife === p.life) return;
+  p.life = newLife;
+
+  const numEl = document.getElementById('life-'+idx);
+  numEl.textContent = p.life;
+  numEl.classList.remove('pulse'); void numEl.offsetWidth; numEl.classList.add('pulse');
+
+  const float = document.createElement('div');
+  float.className = 'delta-float';
+  float.textContent = (dir>0?'+':'') + dir;
+  areaEl.appendChild(float);
+  float.style.animation = 'floatUp .6s ease forwards';
+  setTimeout(()=> float.remove(), 600);
+
+  if(p.life === 0){
+    eliminatePlayer(idx);
+  }
+}
+
+function eliminatePlayer(idx){
+  const p = state.players[idx];
+  if(p.eliminated) return;
+  p.eliminated = true;
+
+  const zone = gridEl.querySelector(`.zone[data-idx="${idx}"]`);
+  zone.classList.add('locked');
+  const badge = document.createElement('div');
+  badge.className = 'eliminated-badge';
+  badge.textContent = 'Eliminován';
+  zone.querySelector('.zone-inner').appendChild(badge);
+
+  checkForWinner();
+}
+
+function checkForWinner(){
+  const alive = state.players.filter(p=>!p.eliminated);
+  const eliminatedCount = state.players.length - alive.length;
+  if(eliminatedCount >= state.players.length - 1 && alive.length === 1){
+    showEndScreen(alive[0].id);
+  }
+}
+
+function showEndScreen(winnerIdx){
+  document.getElementById('winner-text').textContent = `Hráč ${winnerIdx+1} vyhrává`;
+  document.getElementById('end-screen').classList.add('open');
+  closeMenu();
+}
+
+function hideEndScreen(){
+  document.getElementById('end-screen').classList.remove('open');
+}
+
+// ---------- HUB / MENU ----------
+const hub = document.getElementById('hub');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+
+function openMenu(){ menu.classList.add('open'); overlay.classList.add('open'); }
+function closeMenu(){ menu.classList.remove('open'); overlay.classList.remove('open'); }
+
+hub.addEventListener('click', openMenu);
+overlay.addEventListener('click', closeMenu);
+document.getElementById('close-menu').addEventListener('click', closeMenu);
+
+document.getElementById('reset-lives').addEventListener('click', ()=>{
+  state.players.forEach((p,idx)=>{
+    p.life = state.startLife;
+    p.eliminated = false;
+    document.getElementById('life-'+idx).textContent = p.life;
+    const zone = gridEl.querySelector(`.zone[data-idx="${idx}"]`);
+    zone.classList.remove('locked');
+    const badge = zone.querySelector('.eliminated-badge');
+    if(badge) badge.remove();
+  });
+  hideEndScreen();
+  closeMenu();
+});
+
+document.getElementById('new-game').addEventListener('click', ()=>{
+  closeMenu();
+  gameEl.style.display = 'none';
+  setupEl.style.display = 'flex';
+});
+
+document.getElementById('play-again').addEventListener('click', ()=>{
+  state.players.forEach(p=>{ p.life = state.startLife; p.eliminated = false; });
+  buildGrid();
+});
+
+document.getElementById('back-setup').addEventListener('click', ()=>{
+  hideEndScreen();
+  gameEl.style.display = 'none';
+  setupEl.style.display = 'flex';
+});
+</script>
+</body>
+</html>
