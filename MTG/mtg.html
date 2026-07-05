@@ -10,9 +10,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <div id="header-placeholder"></div>
+
+    <main class="container">
+        <h1>Magic the Gathering</h1>
+        <p>Vítejte ve světě MTG...</p>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+
     <script>
-        fetch('header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
-        fetch('footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+        fetch('../header.html')
+            .then(r => r.text())
+            .then(d => document.getElementById('header-placeholder').innerHTML = d);
+            
+        fetch('../footer.html')
+            .then(r => r.text())
+            .then(d => document.getElementById('footer-placeholder').innerHTML = d);
     </script>
 </body>
 </html>
