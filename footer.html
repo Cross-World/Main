@@ -1,6 +1,57 @@
 <footer class="main-footer">
     <p>&copy; 2025 Cross-World Games</p>
+    <div class="footer-links">
+        <a href="#" id="open-dev-modal" class="footer-link">O vývojářích</a>
+    </div>
     <div class="social-links">
         <a href="https://www.facebook.com/profile.php?id=61575250724081" class="social-icon" target="_blank" rel="noopener noreferrer">F</a>
     </div>
 </footer>
+
+<div id="dev-modal" class="dev-modal">
+    <div class="dev-modal-content">
+        <span class="close-dev-modal">&times;</span>
+        <h2>O vývojářích</h2>
+        <p>Vítejte na informační stránce projektu <strong>Cross-World</strong>!</p>
+        <p>Jsme tým nadšených vývojářů a herních fanoušků, kteří pro vás tvoří tento herní portál. Naším cílem je přinášet zábavné mini-hry v moderním a rychlém kabátě.</p>
+        <div class="dev-team">
+            <div class="dev-member">
+                <h3>Vývojový tým</h3>
+                <p>Návrh struktury, programování frontend her a design herního prostředí.</p>
+            </div>
+        </div>
+        <p class="modal-footer-note">Děkujeme, že hrajete naše hry!</p>
+    </div>
+</div>
+
+<script>
+    // Funkce pro inicializaci modálu po načtení patičky
+    (function() {
+        const modal = document.getElementById('dev-modal');
+        const openBtn = document.getElementById('open-dev-modal');
+        const closeBtn = document.querySelector('.close-dev-modal');
+
+        if (openBtn && modal && closeBtn) {
+            // Otevření okna
+            openBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Zamezí scrollování pozadí
+            });
+
+            // Zavření okna křížkem
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Obnoví scrollování
+            });
+
+            // Zavření okna kliknutím mimo obsah okna (na tmavé pozadí)
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    })();
+</script>

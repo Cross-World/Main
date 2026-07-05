@@ -7,6 +7,23 @@
     margin-top: auto;
 }
 
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-link {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-family: 'Montserrat', sans-serif;
+    transition: 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #00e0ff;
+    text-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
+}
+
 .social-links { margin-top: 15px; }
 
 .social-links a {
@@ -18,4 +35,105 @@
 
 .social-links a:hover {
     filter: drop-shadow(0 0 8px #00e0ff);
+}
+
+/* === Styly pro překryvné modální okno === */
+.dev-modal {
+    display: none; /* Skryté jako výchozí */
+    position: fixed;
+    z-index: 3000; /* Nad všemi ostatními prvky (včetně headeru a lightboxu) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 4, 10, 0.85); /* Tmavé poloprůhledné pozadí */
+    backdrop-filter: blur(5px); /* Jemné rozmazání pozadí */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.dev-modal-content {
+    background-color: #131224; /* Tmavé herní pozadí karty */
+    color: #f0f0f0;
+    padding: 30px;
+    border: 2px solid #00e0ff; /* Tyrkysový herní okraj */
+    border-radius: 12px;
+    max-width: 550px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    text-align: left;
+    animation: fadeInModal 0.3s ease;
+}
+
+@keyframes fadeInModal {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-dev-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #888;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-dev-modal:hover {
+    color: #00e0ff;
+}
+
+.dev-modal-content h2 {
+    color: #00e0ff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.dev-modal-content p {
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.dev-modal-content strong {
+    color: #00e0ff;
+}
+
+.dev-team {
+    background-color: #0f0e1c;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #00e0ff;
+    margin: 20px 0;
+}
+
+.dev-member h3 {
+    margin: 0 0 5px 0;
+    color: #fff;
+    font-size: 1.1em;
+}
+
+.dev-member p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.modal-footer-note {
+    font-style: italic;
+    font-size: 0.85em;
+    color: #666 !important;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 0 !important;
 }
