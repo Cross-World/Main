@@ -49,9 +49,9 @@
 
     // Pomocná funkce pro zkrácení/úpravu názvu platformy
     function formatPlatformName(platforms) {
-      if (platforms.includes("Steam")) return "Steam";
-      if (platforms.includes("Epic Games Store")) return "Epic Games";
-      if (platforms.includes("PlayStation") || platforms.includes("PS4") || platforms.includes("PS5")) return "PSN";
+      if (platforms.includes("steam")) return "Steam";
+      if (platforms.includes("epic-games-store")) return "Epic Games";
+      if (platforms.includes("ps4") || platforms.includes("PS4") || platforms.includes("PS5")) return "PSN";
       if (platforms.includes("Xbox")) return "Xbox";
       if (platforms.includes("GOG")) return "GOG";
       return platforms.split(',')[0]; // Pokud je více platforem, vrátí první
