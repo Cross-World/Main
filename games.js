@@ -1,82 +1,77 @@
-  document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.getElementById("free-games-grid");
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    let cachedGames = []; // Uložení dat pro rychlé filtrování bez nutnosti znovu volat API
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.getElementById("free-games-grid");
+  const filterButtons = document.querySelectorAll(".filter-btn");
 
-    // Získání her z API
-    async function fetchFreeGames() {
-      try {
-        // Použití GamerPower API přes veřejnou CORS proxy
-        const apiUrl = "https://corsproxy.io/?" + encodeURIComponent("https://www.gamerpower.com/api/giveaways");
-        const response = await fetch(apiUrl);
-        
-        if (!response.ok) throw new Error("Chyba při načítání her");
-        
-        const data = await response.json();
-        // Filtrujeme pouze Giveaways typu "Game" (vynecháme DLC/loot)
-        cachedGames = data.filter(item => item.type === "Game");
-        
-        renderGames(cachedGames);
-      } catch (error) {
-        console.error("API Error:", error);
-        grid.innerHTML = `<div class="no-games">Nepodařilo se načíst hry zdarma. Zkuste to prosím později.</div>`;
+  // Funkce pro načtení her z API s parametrem platformy
+  async function fetchFreeGames(platform = "all") {
+    // Zobrazení načítání při každém přepnutí filtru
+    grid.innerHTML = `<div class="loading">Načítám hry zdarma...</div>`;
+
+    try {
+      // Sestavení URL podle vybrané platformy
+      let targetApiUrl = "https://www.gamerpower.com/api/giveaways?type=game";
+
+      if (platform !== "all") {
+        targetApiUrl += `&platform=${platform}`;
       }
-    }
 
-    // Vykreslení karet do HTML
-    function renderGames(games) {
-      if (games.length === 0) {
-        grid.innerHTML = `<div class="no-games">Pro zvolenou platformu nebyly nalezeny žádné hry zdarma.</div>`;
+      // Použití CORS proxy pro obcházení browser CORS striktnosti
+      const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetApiUrl);
+      
+      const response = await fetch(proxyUrl);
+      
+      // GamerPower API vrací status 404 (nebo prázdné pole), pokud pro danou platformu nic nenajde
+      if (response.status === 404) {
+        renderGames([]);
         return;
       }
 
-      grid.innerHTML = games.map(game => `
-        <article class="game-card">
-          <img src="${game.thumbnail}" alt="${game.title}" loading="lazy">
-          <div class="game-info">
-            <h3 class="game-title">${game.title}</h3>
-            <div class="game-meta">
-              <span class="platform-tag">${formatPlatformName(game.platforms)}</span>
-              <span class="worth-tag">${game.worth !== "N/A" ? game.worth : ""}</span>
-            </div>
-            <a href="${game.open_giveaway_url}" target="_blank" rel="noopener noreferrer" class="claim-btn">
-              Získat zdarma
-            </a>
+      if (!response.ok) throw new Error("Chyba při komunikaci s API");
+
+      const games = await response.json();
+      renderGames(games);
+
+    } catch (error) {
+      console.error("API Error:", error);
+      grid.innerHTML = `<div class="no-games">Nepodařilo se načíst hry. Zkuste to prosím později.</div>`;
+    }
+  }
+
+  // Vykreslení karet do HTML
+  function renderGames(games) {
+    if (!Array.isArray(games) || games.length === 0) {
+      grid.innerHTML = `<div class="no-games">Pro tuto platformu nebyly nalezeny žádné aktuální hry zdarma.</div>`;
+      return;
+    }
+
+    grid.innerHTML = games.map(game => `
+      <article class="game-card">
+        <img src="${game.thumbnail}" alt="${game.title}" loading="lazy">
+        <div class="game-info">
+          <h3 class="game-title">${game.title}</h3>
+          <div class="game-meta">
+            <span class="platform-tag">${game.platforms}</span>
+            <span class="worth-tag">${game.worth !== "N/A" ? game.worth : ""}</span>
           </div>
-        </article>
-      `).join('');
-    }
+          <a href="${game.open_giveaway_url}" target="_blank" rel="noopener noreferrer" class="claim-btn">
+            Získat zdarma
+          </a>
+        </div>
+      </article>
+    `).join('');
+  }
 
-    // Pomocná funkce pro zkrácení/úpravu názvu platformy
-    function formatPlatformName(platforms) {
-      if (platforms.includes("steam")) return "Steam";
-      if (platforms.includes("epic-games-store")) return "Epic Games";
-      if (platforms.includes("ps4") || platforms.includes("PS4") || platforms.includes("PS5")) return "PSN";
-      if (platforms.includes("Xbox")) return "Xbox";
-      if (platforms.includes("GOG")) return "GOG";
-      return platforms.split(',')[0]; // Pokud je více platforem, vrátí první
-    }
+  // Event listenery pro tlačítka
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
 
-    // Logika filtrů
-    filterButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        // Změna aktivního tlačítka
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-
-        const selectedPlatform = button.getAttribute("data-platform");
-
-        if (selectedPlatform === "all") {
-          renderGames(cachedGames);
-        } else {
-          const filtered = cachedGames.filter(game => 
-            game.platforms.toLowerCase().includes(selectedPlatform.toLowerCase())
-          );
-          renderGames(filtered);
-        }
-      });
+      const platform = button.getAttribute("data-platform");
+      fetchFreeGames(platform);
     });
-
-    // Spuštění načítání
-    fetchFreeGames();
   });
+
+  // První načtení (všechny hry)
+  fetchFreeGames("all");
+});
