@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross-World | Herní svět</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <section class="free-games-section">
+    <h2 class="section-title">Hry ZDARMA</h2>
+  
+    <div class="filter-container">
+        <button class="filter-btn active" data-platform="all">Všechny</button>
+        <button class="filter-btn" data-platform="steam">Steam</button>
+        <button class="filter-btn" data-platform="epic-games-store">Epic Games</button>
+        <button class="filter-btn" data-platform="ps4">PSN</button>
+    </div>
+
+  <div id="free-games-grid" class="games-grid">
+    <div class="loading">Načítám aktuální hry zdarma...</div>
+  </div>
+</section>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
